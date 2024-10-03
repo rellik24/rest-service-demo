@@ -1,20 +1,22 @@
 package com.rellik24.rest_service.controller;
 
-import com.rellik24.rest_service.model.Person;
 import com.rellik24.rest_service.service.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PersonController {
 
-    @Autowired
-    private PersonService personService;
+    private final PersonService personService;
+
+    // 使用構造函數進行依賴注入
+    public PersonController(PersonService personService) {
+        this.personService = personService;
+    }
 
     @GetMapping("/person")
     public String getPerson() {
-        personService.printPersonInfo();
+        personService.printById();
         return "Done";
     }
 }

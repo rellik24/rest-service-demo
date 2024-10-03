@@ -1,20 +1,27 @@
 package com.rellik24.rest_service.service;
 
-import com.rellik24.rest_service.model.Person;
+import com.rellik24.rest_service.dao.PersonDAO;
+import com.rellik24.rest_service.model.entity.PersonEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+import java.util.Optional;
+
+@Service("PersonService")
 public class PersonService {
 
-    private final Person person;
-
     @Autowired
-    public PersonService(Person person) {
-        this.person = person;
+    private final PersonDAO personDAO;
+
+    public PersonService(PersonDAO personDAO) {
+        this.personDAO = personDAO;
     }
 
-    public void printPersonInfo() {
-        person.getPerson();
+    public void printById(){
+        Optional<PersonEntity> result = this.personDAO.findById(1L);
+
+        if (result.isPresent()) {
+            System.out.println(result.get());
+        }
     }
 }
